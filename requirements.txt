@@ -1,0 +1,35 @@
+# Web & API Framework
+fastapi
+uvicorn
+pydantic
+pydantic-settings
+sse-starlette
+httpx
+python-dotenv
+
+# AI & Agentic Frameworks
+langgraph
+langchain-core
+langchain-google-genai
+langchain-openai
+langchain-anthropic
+pydantic-ai
+
+# Multiprocessing & Distributed Computing
+ray
+
+# Machine Learning & Transformers
+torch
+transformers
+sentence-transformers
+scikit-learn
+
+# Queues & State Persistence
+redis
+arq
+aiosqlite
+
+# Utilities & Testing
+rich
+pytest
+pytest-asyncio
