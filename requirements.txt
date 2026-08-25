@@ -1,4 +1,4 @@
-# Web & API Framework
+# Web, API & Real-Time Framework
 fastapi
 uvicorn
 pydantic
@@ -6,6 +6,13 @@ pydantic-settings
 sse-starlette
 httpx
 python-dotenv
+websockets
+
+# SQL Database & Async ORM
+sqlalchemy
+asyncpg
+aiosqlite
+alembic
 
 # AI & Agentic Frameworks
 langgraph
@@ -24,10 +31,9 @@ transformers
 sentence-transformers
 scikit-learn
 
-# Queues & State Persistence
+# Queues & Caching
 redis
 arq
-aiosqlite
 
 # Utilities & Testing
 rich
