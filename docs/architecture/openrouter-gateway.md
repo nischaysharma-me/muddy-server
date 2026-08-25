@@ -38,9 +38,13 @@ Muddy Server allows developers and downstream clients to use intuitive short nam
 | **OpenAI** | `gpt-4o` | `openai/gpt-4o` | High intelligence multimodal model |
 | **OpenAI** | `gpt-4o-mini` | `openai/gpt-4o-mini` | Cost-efficient high-speed model |
 | **OpenAI** | `o1` / `o3-mini` | `openai/o1` / `openai/o3-mini` | Deep scientific & math reasoning |
-| **Google** | `gemini-2.0-flash` | `google/gemini-2.0-flash-001` | High-throughput, sub-second latency |
+| **Google** | `gemini-3.7-flash` | `google/gemini-3.7-flash` | Latest 2026 flagship workhorse, 1M context, high-speed coding |
+| **Google** | `gemini-3.6-flash` | `google/gemini-3.6-flash` | Refined planning and token efficiency |
+| **Google** | `gemini-3.5-flash-lite` | `google/gemini-3.5-flash-lite` | Low-latency subagent automation |
+| **Google** | `gemini-3.1-pro` | `google/gemini-3.1-pro` | Deep complex reasoning & long context |
+| **Google** | `gemini-flash-latest` | `google/gemini-flash-latest` | Auto-redirects to latest Gemini Flash version |
+| **Google** | `gemini-2.0-flash` | `google/gemini-2.0-flash-001` | High-throughput multimodal streaming |
 | **Google** | `gemini-2.0-pro` | `google/gemini-2.0-pro-exp-02-05:free` | 2M token context, deep research |
-| **Google** | `gemini-2.0-flash:free`| `google/gemini-2.0-flash-001:free` | Free development tier |
 | **DeepSeek** | `deepseek-r1` | `deepseek/deepseek-r1` | Frontier open reasoning model |
 | **DeepSeek** | `deepseek-v3` | `deepseek/deepseek-chat` | General-purpose high-speed chat |
 | **Meta** | `llama-3.3-70b` | `meta-llama/llama-3.3-70b-instruct` | 128k context open-weights flagship |
