@@ -26,6 +26,10 @@ async def lifespan(app: FastAPI):
         except Exception as e:
             logger.error(f"[DB] Database initialization error: {e}")
 
+    if settings.ENABLE_WEBSOCKETS:
+        from app.websockets import ws_broadcaster
+        ws_broadcaster.initialize()
+
     yield
 
     if settings.ENABLE_SQL_DB:
