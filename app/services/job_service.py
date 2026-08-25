@@ -96,9 +96,10 @@ class JobService(BaseService):
                 async with session.begin():
                     stmt = select(JobModel).where(JobModel.id == job_id)
                     job = await session.scalar(stmt)
-                    if job:
+                    if job and job.status != "completed":
                         job.status = "cancelled"
                         job.stage = "CANCELLED"
+                        cancelled = True
         return cancelled
 
 
