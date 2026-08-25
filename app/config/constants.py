@@ -13,6 +13,7 @@ class Environment(str, Enum):
 
 class LLMProviderType(str, Enum):
     """Supported LLM providers."""
+    OPENROUTER = "openrouter"
     GEMINI = "gemini"
     OPENAI = "openai"
     ANTHROPIC = "anthropic"

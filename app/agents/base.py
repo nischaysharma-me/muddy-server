@@ -55,7 +55,28 @@ class LLMProviderFactory:
         active_provider = (provider or settings.DEFAULT_LLM_PROVIDER).lower()
 
         try:
-            if active_provider == "gemini":
+            if active_provider == "openrouter":
+                api_key = settings.OPENROUTER_API_KEY or os.getenv("OPENROUTER_API_KEY")
+                if not api_key:
+                    logger.warning("[LLMFactory] OPENROUTER_API_KEY not configured. Falling back to MockChatModel.")
+                    return MockChatModel()
+                target_model = model_name or settings.OPENROUTER_MODEL
+                headers = {}
+                if getattr(settings, "OPENROUTER_SITE_URL", None):
+                    headers["HTTP-Referer"] = settings.OPENROUTER_SITE_URL
+                if getattr(settings, "OPENROUTER_APP_NAME", None):
+                    headers["X-Title"] = settings.OPENROUTER_APP_NAME
+
+                return ChatOpenAI(
+                    model=target_model,
+                    api_key=api_key,
+                    base_url=settings.OPENROUTER_BASE_URL,
+                    temperature=temperature,
+                    streaming=streaming,
+                    default_headers=headers if headers else None,
+                )
+
+            elif active_provider == "gemini":
                 api_key = settings.GEMINI_API_KEY or os.getenv("GEMINI_API_KEY")
                 if not api_key:
                     logger.warning("[LLMFactory] GEMINI_API_KEY not configured. Falling back to MockChatModel.")

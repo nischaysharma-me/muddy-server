@@ -24,7 +24,14 @@ def test_feature_flags_defaults():
 
 
 def test_ai_settings():
-    assert settings.DEFAULT_LLM_PROVIDER in [LLMProviderType.GEMINI, LLMProviderType.OPENAI, LLMProviderType.ANTHROPIC, LLMProviderType.MOCK]
+    assert settings.DEFAULT_LLM_PROVIDER in [
+        LLMProviderType.OPENROUTER,
+        LLMProviderType.GEMINI,
+        LLMProviderType.OPENAI,
+        LLMProviderType.ANTHROPIC,
+        LLMProviderType.MOCK,
+    ]
+    assert settings.OPENROUTER_BASE_URL == "https://openrouter.ai/api/v1"
     assert settings.REQUEST_TIMEOUT_SECONDS > 0
     assert settings.MAX_RETRIES >= 1
 

@@ -9,10 +9,18 @@ class AISettings(BaseSettings):
     """Configuration for LLM providers, model names, and API keys."""
 
     DEFAULT_LLM_PROVIDER: LLMProviderType = Field(
-        default=LLMProviderType.GEMINI,
-        description="Active default LLM provider",
+        default=LLMProviderType.OPENROUTER,
+        description="Active default LLM provider (openrouter, gemini, openai, anthropic, local, mock)",
     )
 
+    # OpenRouter (Unified Model Gateway)
+    OPENROUTER_API_KEY: str = Field(default="", description="OpenRouter API Key")
+    OPENROUTER_BASE_URL: str = Field(default="https://openrouter.ai/api/v1", description="OpenRouter API Endpoint")
+    OPENROUTER_MODEL: str = Field(default="google/gemini-2.0-flash-001", description="Default OpenRouter Model")
+    OPENROUTER_SITE_URL: str = Field(default="https://nischaysharma.com", description="App site URL for OpenRouter")
+    OPENROUTER_APP_NAME: str = Field(default="Muddy Server", description="App name for OpenRouter")
+
+    # Direct Providers
     # Google Gemini
     GEMINI_API_KEY: str = Field(default="", description="Google Gemini API Key")
     GEMINI_MODEL: str = Field(default="gemini-2.0-flash", description="Default Gemini model")
