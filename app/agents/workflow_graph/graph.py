@@ -130,16 +130,27 @@ class WorkflowGraphEngine:
 
         return workflow.compile(checkpointer=checkpointer.get_checkpointer())
 
-    async def run(self, request: WorkflowRequest) -> Dict[str, Any]:
+    async def run(
+        self,
+        request: Optional[WorkflowRequest] = None,
+        task: Optional[str] = None,
+        goal: Optional[str] = None,
+        session_id: Optional[str] = None,
+        max_steps: int = 4,
+        iterations: int = 4,
+    ) -> Dict[str, Any]:
         """Runs the LangGraph state machine from start to end."""
-        session_id = request.session_id or str(uuid.uuid4())
-        config = {"configurable": {"thread_id": session_id}}
+        active_goal = goal or task or (request.goal if request else "Generic Goal")
+        active_sid = session_id or (request.session_id if request else str(uuid.uuid4()))
+        active_max = max(max_steps, iterations) if not request else request.max_steps
+
+        config = {"configurable": {"thread_id": active_sid}}
 
         initial_state: GraphState = {
-            "session_id": session_id,
-            "goal": request.goal,
+            "session_id": active_sid,
+            "goal": active_goal,
             "step_count": 0,
-            "max_steps": request.max_steps,
+            "max_steps": active_max,
             "plan": [],
             "current_action": "",
             "observations": [],
@@ -150,14 +161,17 @@ class WorkflowGraphEngine:
 
         final_state = await self.compiled_graph.ainvoke(initial_state, config)
         return {
-            "session_id": session_id,
-            "goal": request.goal,
+            "session_id": active_sid,
+            "goal": active_goal,
             "plan": final_state.get("plan", []),
             "observations": final_state.get("observations", []),
+            "final_summary": final_state.get("final_output", ""),
             "final_output": final_state.get("final_output", ""),
+            "status": "completed" if final_state.get("is_done", True) else "in_progress",
             "steps_executed": final_state.get("step_count", 0),
             "is_completed": final_state.get("is_done", True),
         }
 
 
 workflow_engine = WorkflowGraphEngine()
+workflow_graph_agent = workflow_engine
