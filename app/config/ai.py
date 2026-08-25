@@ -40,3 +40,26 @@ class AISettings(BaseSettings):
     # Timeouts & Retries
     REQUEST_TIMEOUT_SECONDS: float = Field(default=60.0, description="HTTP request timeout in seconds")
     MAX_RETRIES: int = Field(default=3, description="Max retries for transient provider failures")
+
+    # Common Model Aliases mapped to OpenRouter Slugs
+    MODEL_ALIASES: dict = {
+        # Anthropic Claude
+        "claude-3.7-sonnet": "anthropic/claude-3.7-sonnet",
+        "claude-3.5-sonnet": "anthropic/claude-3.5-sonnet",
+        "claude-3-haiku": "anthropic/claude-3-haiku",
+        # OpenAI
+        "gpt-4o": "openai/gpt-4o",
+        "gpt-4o-mini": "openai/gpt-4o-mini",
+        "o1": "openai/o1",
+        "o3-mini": "openai/o3-mini",
+        # Google Gemini
+        "gemini-2.0-flash": "google/gemini-2.0-flash-001",
+        "gemini-2.0-pro": "google/gemini-2.0-pro-exp-02-05:free",
+        "gemini-1.5-pro": "google/gemini-pro-1.5",
+        # DeepSeek
+        "deepseek-r1": "deepseek/deepseek-r1",
+        "deepseek-v3": "deepseek/deepseek-chat",
+        # Meta Llama
+        "llama-3.3-70b": "meta-llama/llama-3.3-70b-instruct",
+        "llama-3.1-405b": "meta-llama/llama-3.1-405b-instruct",
+    }

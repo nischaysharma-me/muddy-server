@@ -60,7 +60,10 @@ class LLMProviderFactory:
                 if not api_key:
                     logger.warning("[LLMFactory] OPENROUTER_API_KEY not configured. Falling back to MockChatModel.")
                     return MockChatModel()
-                target_model = model_name or settings.OPENROUTER_MODEL
+
+                raw_model = model_name or settings.OPENROUTER_MODEL
+                target_model = settings.MODEL_ALIASES.get(raw_model.lower(), raw_model)
+
                 headers = {}
                 if getattr(settings, "OPENROUTER_SITE_URL", None):
                     headers["HTTP-Referer"] = settings.OPENROUTER_SITE_URL
