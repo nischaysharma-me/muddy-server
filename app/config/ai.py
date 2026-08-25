@@ -62,7 +62,12 @@ class AISettings(BaseSettings):
         "o3-mini-high": "openai/o3-mini-high",
         "chatgpt-4o-latest": "openai/chatgpt-4o-latest",
         
-        # Google Gemini
+        # Google Gemini Models (Latest 3.x & 2.x Series)
+        "gemini-3.7-flash": "google/gemini-3.7-flash",
+        "gemini-3.6-flash": "google/gemini-3.6-flash",
+        "gemini-3.5-flash-lite": "google/gemini-3.5-flash-lite",
+        "gemini-3.1-pro": "google/gemini-3.1-pro",
+        "gemini-flash-latest": "google/gemini-flash-latest",
         "gemini-2.0-flash": "google/gemini-2.0-flash-001",
         "gemini-2.0-flash-lite": "google/gemini-2.0-flash-lite-preview-02-05:free",
         "gemini-2.0-pro": "google/gemini-2.0-pro-exp-02-05:free",
