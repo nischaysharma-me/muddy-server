@@ -1,5 +1,6 @@
 """Central Services Package."""
 
+from app.services.agent_service import AgentService, agent_service
 from app.services.base_service import BaseService
 from app.services.job_service import JobService, job_service
 from app.services.llm_service import LLMService, llm_service
@@ -13,4 +14,6 @@ __all__ = [
     "llm_service",
     "ToolService",
     "tool_service",
+    "AgentService",
+    "agent_service",
 ]

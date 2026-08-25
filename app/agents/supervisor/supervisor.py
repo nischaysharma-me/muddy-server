@@ -11,7 +11,12 @@ from app.tools.registry import registry
 class SupervisorAgent:
     """Supervisor Agent coordinating specialized subagents (Researcher, MathAnalyst, Synthesizer)."""
 
-    async def run(self, task: str, session_id: Optional[str] = None) -> AgentChatResponse:
+    async def run(
+        self,
+        task: str,
+        session_id: Optional[str] = None,
+        subagents: Optional[List[str]] = None,
+    ) -> AgentChatResponse:
         start_time = time.perf_counter()
         session = session_id or str(uuid.uuid4())
         steps: List[AgentStep] = []
