@@ -53,6 +53,9 @@ class MemoryQueue(BaseQueue):
             task.cancel()
             self._statuses[job_id] = "cancelled"
             return True
+        elif self._statuses.get(job_id) in ["queued", "processing"]:
+            self._statuses[job_id] = "cancelled"
+            return True
         return False
 
     @property
