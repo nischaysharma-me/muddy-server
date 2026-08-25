@@ -45,21 +45,64 @@ class AISettings(BaseSettings):
     MODEL_ALIASES: dict = {
         # Anthropic Claude
         "claude-3.7-sonnet": "anthropic/claude-3.7-sonnet",
+        "claude-3.7-sonnet:thinking": "anthropic/claude-3.7-sonnet:thinking",
         "claude-3.5-sonnet": "anthropic/claude-3.5-sonnet",
+        "claude-3.5-haiku": "anthropic/claude-3.5-haiku",
+        "claude-3-opus": "anthropic/claude-3-opus",
         "claude-3-haiku": "anthropic/claude-3-haiku",
-        # OpenAI
+        
+        # OpenAI Models
         "gpt-4o": "openai/gpt-4o",
         "gpt-4o-mini": "openai/gpt-4o-mini",
+        "gpt-4.5-preview": "openai/gpt-4.5-preview",
         "o1": "openai/o1",
+        "o1-mini": "openai/o1-mini",
+        "o1-preview": "openai/o1-preview",
         "o3-mini": "openai/o3-mini",
+        "o3-mini-high": "openai/o3-mini-high",
+        "chatgpt-4o-latest": "openai/chatgpt-4o-latest",
+        
         # Google Gemini
         "gemini-2.0-flash": "google/gemini-2.0-flash-001",
+        "gemini-2.0-flash-lite": "google/gemini-2.0-flash-lite-preview-02-05:free",
         "gemini-2.0-pro": "google/gemini-2.0-pro-exp-02-05:free",
+        "gemini-2.0-flash-thinking": "google/gemini-2.0-flash-thinking-exp:free",
         "gemini-1.5-pro": "google/gemini-pro-1.5",
+        "gemini-1.5-flash": "google/gemini-flash-1.5",
+        "gemini-2.0-flash:free": "google/gemini-2.0-flash-001:free",
+        
         # DeepSeek
         "deepseek-r1": "deepseek/deepseek-r1",
+        "deepseek-r1:free": "deepseek/deepseek-r1:free",
         "deepseek-v3": "deepseek/deepseek-chat",
+        "deepseek-v3:free": "deepseek/deepseek-chat:free",
+        "deepseek-r1-distill-llama-70b": "deepseek/deepseek-r1-distill-llama-70b",
+        "deepseek-r1-distill-qwen-32b": "deepseek/deepseek-r1-distill-qwen-32b",
+        
         # Meta Llama
         "llama-3.3-70b": "meta-llama/llama-3.3-70b-instruct",
+        "llama-3.3-70b:free": "meta-llama/llama-3.3-70b-instruct:free",
         "llama-3.1-405b": "meta-llama/llama-3.1-405b-instruct",
+        "llama-3.1-70b": "meta-llama/llama-3.1-70b-instruct",
+        "llama-3.1-8b": "meta-llama/llama-3.1-8b-instruct",
+        "llama-3.2-3b": "meta-llama/llama-3.2-3b-instruct",
+        "llama-3.2-1b": "meta-llama/llama-3.2-1b-instruct",
+        
+        # Qwen (Alibaba)
+        "qwen-2.5-72b": "qwen/qwen-2.5-72b-instruct",
+        "qwen-2.5-coder-32b": "qwen/qwen-2.5-coder-32b-instruct",
+        "qwq-32b-preview": "qwen/qwq-32b-preview",
+        "qwen-max": "qwen/qwen-max",
+        
+        # Mistral AI
+        "mistral-large": "mistralai/mistral-large-2411",
+        "mistral-small": "mistralai/mistral-small-24b-instruct-2501",
+        "codestral": "mistralai/codestral-2501",
+        "pixtral-large": "mistralai/pixtral-large-2411",
+        "ministral-8b": "mistralai/ministral-8b",
+        
+        # xAI Grok
+        "grok-2": "x-ai/grok-2-1212",
+        "grok-2-vision": "x-ai/grok-2-vision-1212",
+        "grok-beta": "x-ai/grok-beta",
     }

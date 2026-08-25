@@ -17,10 +17,10 @@ Traditionally, multi-model AI architectures require installing and configuring d
                                                  │
           ┌──────────────────────┬───────────────┴──────────────┬──────────────────────┐
           ▼                      ▼                              ▼                      ▼
-  Anthropic Claude         OpenAI Models                  Google Gemini          Open-Weights
-  - claude-3.7-sonnet      - gpt-4o                       - gemini-2.0-flash     - deepseek-r1
-  - claude-3.5-sonnet      - gpt-4o-mini                  - gemini-2.0-pro       - deepseek-v3
-  - claude-3-haiku         - o1 / o3-mini                 - gemini-1.5-pro       - llama-3.3-70b
+  Anthropic Claude         OpenAI Models                  Google Gemini          Open-Weights & Reasoning
+  - claude-3.7-sonnet      - gpt-4o / gpt-4.5             - gemini-2.0-flash     - deepseek-r1 / v3
+  - claude-3.5-sonnet      - gpt-4o-mini                  - gemini-2.0-pro       - llama-3.3-70b
+  - claude-3.5-haiku       - o1 / o3-mini                 - gemini-1.5-pro       - qwen-2.5-72b / mistral
 ```
 
 ---
@@ -29,29 +29,26 @@ Traditionally, multi-model AI architectures require installing and configuring d
 
 Muddy Server allows developers and downstream clients to use intuitive short names. The configuration in [`app/config/ai.py`](file:///Users/davinci/Documents/sscorp/nischaysharma.com/muddy-server/app/config/ai.py) automatically resolves aliases to official OpenRouter model slugs:
 
-```python
-MODEL_ALIASES = {
-    # Anthropic
-    "claude-3.7-sonnet": "anthropic/claude-3.7-sonnet",
-    "claude-3.5-sonnet": "anthropic/claude-3.5-sonnet",
-    "claude-3-haiku": "anthropic/claude-3-haiku",
-    # OpenAI
-    "gpt-4o": "openai/gpt-4o",
-    "gpt-4o-mini": "openai/gpt-4o-mini",
-    "o1": "openai/o1",
-    "o3-mini": "openai/o3-mini",
-    # Google Gemini
-    "gemini-2.0-flash": "google/gemini-2.0-flash-001",
-    "gemini-2.0-pro": "google/gemini-2.0-pro-exp-02-05:free",
-    # DeepSeek
-    "deepseek-r1": "deepseek/deepseek-r1",
-    "deepseek-v3": "deepseek/deepseek-chat",
-    # Meta Llama
-    "llama-3.3-70b": "meta-llama/llama-3.3-70b-instruct",
-}
-```
+| Provider | Short Alias | Target OpenRouter Model Slug | Key Characteristics |
+| :--- | :--- | :--- | :--- |
+| **Anthropic** | `claude-3.7-sonnet` | `anthropic/claude-3.7-sonnet` | Frontier hybrid reasoning & coding model |
+| **Anthropic** | `claude-3.7-sonnet:thinking` | `anthropic/claude-3.7-sonnet:thinking` | Extended chain-of-thought reasoning |
+| **Anthropic** | `claude-3.5-sonnet` | `anthropic/claude-3.5-sonnet` | Fast, accurate agentic tool use |
+| **Anthropic** | `claude-3.5-haiku` | `anthropic/claude-3.5-haiku` | Low-latency text processing |
+| **OpenAI** | `gpt-4o` | `openai/gpt-4o` | High intelligence multimodal model |
+| **OpenAI** | `gpt-4o-mini` | `openai/gpt-4o-mini` | Cost-efficient high-speed model |
+| **OpenAI** | `o1` / `o3-mini` | `openai/o1` / `openai/o3-mini` | Deep scientific & math reasoning |
+| **Google** | `gemini-2.0-flash` | `google/gemini-2.0-flash-001` | High-throughput, sub-second latency |
+| **Google** | `gemini-2.0-pro` | `google/gemini-2.0-pro-exp-02-05:free` | 2M token context, deep research |
+| **Google** | `gemini-2.0-flash:free`| `google/gemini-2.0-flash-001:free` | Free development tier |
+| **DeepSeek** | `deepseek-r1` | `deepseek/deepseek-r1` | Frontier open reasoning model |
+| **DeepSeek** | `deepseek-v3` | `deepseek/deepseek-chat` | General-purpose high-speed chat |
+| **Meta** | `llama-3.3-70b` | `meta-llama/llama-3.3-70b-instruct` | 128k context open-weights flagship |
+| **Qwen** | `qwen-2.5-coder-32b` | `qwen/qwen-2.5-coder-32b-instruct` | State-of-the-art code generation |
+| **Mistral** | `mistral-large` | `mistralai/mistral-large-2411` | Enterprise multilingual reasoning |
+| **xAI** | `grok-2` | `x-ai/grok-2-1212` | Real-time reasoning and analysis |
 
-If a client requests `model="claude-3.5-sonnet"`, the server automatically formats the request for `anthropic/claude-3.5-sonnet`. If a client passes an explicit full slug (e.g. `mistralai/mistral-large-2407`), it is passed through directly.
+If a client requests `model="claude-3.7-sonnet"`, the server automatically formats the request for `anthropic/claude-3.7-sonnet`. If a client passes an explicit full slug (e.g. `mistralai/mistral-large-2407`), it is passed through directly.
 
 ---
 
