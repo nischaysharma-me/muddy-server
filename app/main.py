@@ -18,7 +18,23 @@ async def lifespan(app: FastAPI):
     logger.info(f"🚀 Starting {settings.APP_NAME} v{settings.APP_VERSION}")
     logger.info(f"🔧 Environment: {settings.ENVIRONMENT} | Debug: {settings.DEBUG}")
     logger.info(f"🧠 Default LLM Provider: {settings.DEFAULT_LLM_PROVIDER}")
+
+    if settings.ENABLE_SQL_DB:
+        from app.db.session import init_db, close_db
+        try:
+            await init_db()
+        except Exception as e:
+            logger.error(f"[DB] Database initialization error: {e}")
+
     yield
+
+    if settings.ENABLE_SQL_DB:
+        from app.db.session import close_db
+        try:
+            await close_db()
+        except Exception as e:
+            logger.error(f"[DB] Error closing database: {e}")
+
     logger.info(f"🛑 Shutting down {settings.APP_NAME}")
 
 
