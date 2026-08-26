@@ -236,7 +236,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"message\": \"Calculate (128 * 45) + 32 and check server system health status\",\n  \"provider\": \"openrouter\",\n  \"model\": \"claude-3.5-sonnet\",\n  \"session_id\": \"{{session_id}}\",\n  \"tools\": [\"calculator\", \"get_system_status\", \"web_search\"],\n  \"temperature\": 0.7\n}"
+							"raw": "{\n  \"message\": \"Calculate (128 * 45) + 32 and check server system health status\",\n  \"provider\": \"openrouter\",\n  \"model\": \"gemini-3.7-flash\",\n  \"session_id\": \"{{session_id}}\",\n  \"tools\": [\"calculator\", \"get_system_status\", \"web_search\"],\n  \"temperature\": 0.7\n}"
 						},
 						"url": {
 							"raw": "{{base_url}}/api/v1/agents/chat",
