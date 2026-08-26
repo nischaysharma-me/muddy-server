@@ -95,3 +95,8 @@ async def test_stream_agent_chat():
         content = response.text
         assert "event: init" in content or "event: final" in content or "event: delta" in content
 
+        # Also test /api/v1/agents/chat/stream
+        chat_stream_res = await client.post("/api/v1/agents/chat/stream", json=payload)
+        assert chat_stream_res.status_code == 200
+        assert "text/event-stream" in chat_stream_res.headers.get("content-type", "")
+
