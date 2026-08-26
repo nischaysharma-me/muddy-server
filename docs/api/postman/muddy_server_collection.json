@@ -1,0 +1,415 @@
+{
+	"info": {
+		"_postman_id": "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d",
+		"name": "Muddy Server API",
+		"description": "Comprehensive Postman collection for Muddy Server: Computation-as-a-Service (CaaS), OpenRouter Multi-Model Gateway, LangGraph State Graphs, Transactional Pipelines, and Real-Time Telemetry.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Health & System",
+			"item": [
+				{
+					"name": "Root Information",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/",
+							"host": ["{{base_url}}"],
+							"path": [""]
+						},
+						"description": "Returns welcome message, server version, and core portal URLs."
+					},
+					"response": []
+				},
+				{
+					"name": "Health Check",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/health",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "health"]
+						},
+						"description": "System health check returning uptime, environment, and provider status."
+					},
+					"response": []
+				},
+				{
+					"name": "Documentation Portal (HTML)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/documentation",
+							"host": ["{{base_url}}"],
+							"path": ["documentation"]
+						},
+						"description": "Interactive HTML documentation explorer portal."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Compute & Background Jobs",
+			"item": [
+				{
+					"name": "Submit Compute Job",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 202) {",
+									"    var jsonData = pm.response.json();",
+									"    if (jsonData.job_id) {",
+									"        pm.environment.set(\"job_id\", jsonData.job_id);",
+									"    }",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"job_type\": \"article_generation\",\n  \"payload\": {\n    \"topic\": \"Event-Driven Microservices with LangGraph and FastAPI\",\n    \"target_audience\": \"Senior Backend Architects\",\n    \"model\": \"gemini-3.7-flash\"\n  },\n  \"run_async\": true\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/compute/jobs",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "compute", "jobs"]
+						},
+						"description": "Submits an asynchronous compute job. Returns job_id and WebSocket streaming URL in < 5ms."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Compute Job Status",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/compute/jobs/{{job_id}}",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "compute", "jobs", "{{job_id}}"]
+						},
+						"description": "Retrieves live execution status, 0-100% progress, stage, execution time, and JSON outputs."
+					},
+					"response": []
+				},
+				{
+					"name": "Cancel Compute Job",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/compute/jobs/{{job_id}}",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "compute", "jobs", "{{job_id}}"]
+						},
+						"description": "Cancels a queued or executing compute job."
+					},
+					"response": []
+				},
+				{
+					"name": "Candidate Document Reranker",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"query\": \"FastAPI async database connection pooling\",\n  \"documents\": [\n    \"Astrophysics and planetary formation theories\",\n    \"PostgreSQL connection pooling with asyncpg and SQLAlchemy 2.0 Async\",\n    \"Gardening and botany pruning techniques\"\n  ],\n  \"top_k\": 2\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/compute/nlp/rerank",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "compute", "nlp", "rerank"]
+						},
+						"description": "Reranks candidate document passages by query relevance score."
+					},
+					"response": []
+				},
+				{
+					"name": "Text Similarity Scoring",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"text_a\": \"FastAPI Python async backend framework\",\n  \"text_b\": \"FastAPI and Python high performance async server\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/compute/nlp/similarity",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "compute", "nlp", "similarity"]
+						},
+						"description": "Calculates lexical cosine similarity between two text passages on a 0.0 to 1.0 scale."
+					},
+					"response": []
+				},
+				{
+					"name": "Direct LLM Completion",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"prompt\": \"Summarize the benefits of event-driven microservices in 3 concise bullet points.\",\n  \"provider\": \"openrouter\",\n  \"model\": \"claude-3.7-sonnet\",\n  \"temperature\": 0.7\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/compute/llm/generate",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "compute", "llm", "generate"]
+						},
+						"description": "Executes single-turn text completion through OpenRouter or specified provider."
+					},
+					"response": []
+				},
+				{
+					"name": "Direct LLM Stream (SSE)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "text/event-stream"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"prompt\": \"Write a short Python async function using asyncio.gather\",\n  \"provider\": \"openrouter\",\n  \"model\": \"gemini-3.7-flash\",\n  \"temperature\": 0.5\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/compute/llm/stream",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "compute", "llm", "stream"]
+						},
+						"description": "Streams generated tokens in real time as Server-Sent Events (SSE)."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "AI Agents & Workflows",
+			"item": [
+				{
+					"name": "Conversational Agent Chat",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"message\": \"Calculate (128 * 45) + 32 and check server system health status\",\n  \"provider\": \"openrouter\",\n  \"model\": \"claude-3.5-sonnet\",\n  \"session_id\": \"{{session_id}}\",\n  \"tools\": [\"calculator\", \"get_system_status\", \"web_search\"],\n  \"temperature\": 0.7\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/agents/chat",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "agents", "chat"]
+						},
+						"description": "Executes single or multi-turn conversational ReAct agent with dynamic tool calling and memory snapshotting."
+					},
+					"response": []
+				},
+				{
+					"name": "Conversational Agent Stream (SSE)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							},
+							{
+								"key": "Accept",
+								"value": "text/event-stream"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"message\": \"Explain how transaction rollbacks work in Muddy Server\",\n  \"provider\": \"openrouter\",\n  \"model\": \"gemini-3.7-flash\",\n  \"session_id\": \"{{session_id}}\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/agents/chat/stream",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "agents", "chat", "stream"]
+						},
+						"description": "Streams reasoning thought steps, tool calls, and response tokens via SSE."
+					},
+					"response": []
+				},
+				{
+					"name": "LangGraph Cyclic State Graph DAG",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"goal\": \"Conduct complete architectural review and performance optimization plan\",\n  \"max_steps\": 4,\n  \"session_id\": \"workflow-sess-001\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/agents/workflow/run",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "agents", "workflow", "run"]
+						},
+						"description": "Executes cyclic state graph DAG (Planner -> Executor -> Reflector -> Synthesizer)."
+					},
+					"response": []
+				},
+				{
+					"name": "Multi-Agent Supervisor Team",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"task\": \"Build an authenticated API endpoint with full test coverage and schema validation\",\n  \"session_id\": \"supervisor-sess-001\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/agents/supervisor/run",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "agents", "supervisor", "run"]
+						},
+						"description": "Coordinates multi-agent supervisor team delegating subtasks across specialized subagents."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Tools & MCP",
+			"item": [
+				{
+					"name": "List All Registered Tools",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/tools",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "tools"]
+						},
+						"description": "Returns full catalog of registered Python tools and external MCP tools."
+					},
+					"response": []
+				},
+				{
+					"name": "Execute Tool Dynamically",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"parameters\": {\n    \"expression\": \"(250 * 4) + 50\"\n  }\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/tools/calculator/execute",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "tools", "calculator", "execute"]
+						},
+						"description": "Directly executes a tool with parameters and records execution audit log in SQL."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Documentation Engine",
+			"item": [
+				{
+					"name": "Get Documentation Tree",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/docs/tree",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "docs", "tree"]
+						},
+						"description": "Returns hierarchical navigation tree of all documentation sections and markdown files."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Specific Documentation Page",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/docs/about/application",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "docs", "about", "application"]
+						},
+						"description": "Retrieves structured markdown content and metadata for a documentation page."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Raw Markdown Document",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/docs/architecture/openrouter-gateway/raw",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "docs", "architecture", "openrouter-gateway", "raw"]
+						},
+						"description": "Retrieves plain raw markdown text for a documentation page."
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
