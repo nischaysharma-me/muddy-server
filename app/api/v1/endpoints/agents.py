@@ -34,7 +34,8 @@ async def chat_with_agent(request: AgentChatRequest):
         )
 
 
-@router.post("/stream", summary="Stream Agent Reasoning and Token Output (SSE)")
+@router.post("/chat/stream", summary="Stream Agent Reasoning and Token Output (SSE)")
+@router.post("/stream", summary="Stream Agent Reasoning and Token Output (SSE) [Alias]")
 async def stream_agent_chat(request: AgentChatRequest):
     """Streams agent reasoning steps, tool calls, and text tokens via Server-Sent Events (SSE)."""
 
