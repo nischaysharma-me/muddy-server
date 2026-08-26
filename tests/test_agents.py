@@ -32,6 +32,24 @@ async def test_conversational_agent_chat():
 
 
 @pytest.mark.asyncio
+async def test_conversational_agent_chat_openrouter_provider_schema():
+    transport = ASGITransport(app=app)
+    async with AsyncClient(transport=transport, base_url="http://test") as client:
+        payload = {
+            "message": "Calculate (128 * 45) + 32 and check server system health status",
+            "provider": "openrouter",
+            "model": "claude-3.5-sonnet",
+            "session_id": "test-openrouter-schema",
+            "tools": ["calculator", "get_system_status", "web_search"],
+            "temperature": 0.7
+        }
+        # In test mode without live OpenRouter keys, it routes safely or validates schema without 422
+        response = await client.post("/api/v1/agents/chat", json=payload)
+        assert response.status_code != 422
+        assert response.status_code == 200
+
+
+@pytest.mark.asyncio
 async def test_workflow_graph_run():
     transport = ASGITransport(app=app)
     async with AsyncClient(transport=transport, base_url="http://test") as client:

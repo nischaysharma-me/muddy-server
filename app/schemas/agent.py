@@ -7,7 +7,7 @@ from app.schemas.message import Message, ToolCall, ToolResult
 
 
 AgentType = Literal["conversational", "workflow", "supervisor"]
-ModelProviderType = Literal["gemini", "openai", "anthropic", "mock"]
+ModelProviderType = Literal["openrouter", "gemini", "openai", "anthropic", "local", "mock"]
 
 
 class AgentChatRequest(BaseModel):
