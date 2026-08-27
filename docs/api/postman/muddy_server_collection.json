@@ -365,6 +365,113 @@
 			]
 		},
 		{
+			"name": "Tool Marketplace",
+			"item": [
+				{
+					"name": "Browse Marketplace Catalog",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/tools/marketplace",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "tools", "marketplace"]
+						},
+						"description": "Browse catalog of all discovered marketplace tools."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Tool Detail",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/tools/marketplace/currency_converter",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "tools", "marketplace", "currency_converter"]
+						},
+						"description": "Retrieves manifest, parameter JSON Schema, and README for a specific tool."
+					},
+					"response": []
+				},
+				{
+					"name": "Scaffold Tool Boilerplate",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"tool_id\": \"crypto_price_checker\",\n  \"name\": \"Crypto Price Checker\",\n  \"category\": \"finance\",\n  \"description\": \"Fetches real-time crypto prices\",\n  \"author\": \"Developer\",\n  \"tags\": [\"crypto\", \"finance\"]\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/tools/marketplace/scaffold",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "tools", "marketplace", "scaffold"]
+						},
+						"description": "Scaffolds a new tool boilerplate folder with starter files."
+					},
+					"response": []
+				},
+				{
+					"name": "Upload Custom Tool",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"tool_id\": \"text_reverser\",\n  \"manifest\": {\n    \"name\": \"Text Reverser\",\n    \"category\": \"utilities\",\n    \"description\": \"Reverses text characters\",\n    \"parameters\": {\n      \"type\": \"object\",\n      \"properties\": { \"text\": { \"type\": \"string\" } },\n      \"required\": [\"text\"]\n    }\n  },\n  \"handler_code\": \"from app.tools.plugins.base import BaseToolPlugin\\n\\nclass TextReverserTool(BaseToolPlugin):\\n    async def execute(self, text: str):\\n        return {'reversed': text[::-1]}\\n\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/v1/tools/marketplace/upload",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "tools", "marketplace", "upload"]
+						},
+						"description": "Uploads and activates a custom tool dynamically."
+					},
+					"response": []
+				},
+				{
+					"name": "Install / Enable Tool",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/tools/marketplace/currency_converter/install",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "tools", "marketplace", "currency_converter", "install"]
+						},
+						"description": "Enables a marketplace tool for live agents."
+					},
+					"response": []
+				},
+				{
+					"name": "Uninstall / Disable Tool",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/tools/marketplace/currency_converter/uninstall",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "tools", "marketplace", "currency_converter", "uninstall"]
+						},
+						"description": "Disables a marketplace tool."
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "Documentation Engine",
 			"item": [
 				{
