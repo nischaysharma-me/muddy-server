@@ -1,0 +1,26 @@
+{
+  "id": "json_formatter",
+  "name": "JSON Formatter & Validator",
+  "version": "1.0.0",
+  "author": "Muddy Team",
+  "category": "developer",
+  "tags": ["json", "format", "validate", "developer", "lint"],
+  "description": "Formats, validates, and pretty-prints raw JSON strings with syntax checks.",
+  "enabled": true,
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "raw_json": {
+        "type": "string",
+        "description": "Raw unformatted or minified JSON string"
+      },
+      "indent": {
+        "type": "integer",
+        "description": "Indentation spacing (default: 2)",
+        "default": 2
+      }
+    },
+    "required": ["raw_json"]
+  },
+  "icon": "📋"
+}

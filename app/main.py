@@ -30,6 +30,10 @@ async def lifespan(app: FastAPI):
         from app.websockets import ws_broadcaster
         ws_broadcaster.initialize()
 
+    # Discover and register custom marketplace tool plugins
+    from app.services.tool_marketplace_service import tool_marketplace_service
+    tool_marketplace_service.discover_and_register_all()
+
     yield
 
     if settings.ENABLE_SQL_DB:

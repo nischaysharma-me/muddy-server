@@ -1,0 +1,29 @@
+{
+  "id": "currency_converter",
+  "name": "Currency Converter",
+  "version": "1.0.0",
+  "author": "Muddy Team",
+  "category": "finance",
+  "tags": ["currency", "finance", "money", "forex"],
+  "description": "Converts amounts between global fiat currencies (USD, EUR, GBP, JPY, INR, CAD).",
+  "enabled": true,
+  "parameters": {
+    "type": "object",
+    "properties": {
+      "amount": {
+        "type": "number",
+        "description": "The monetary amount to convert"
+      },
+      "from_currency": {
+        "type": "string",
+        "description": "Source 3-letter currency code (e.g. USD, EUR, GBP, INR)"
+      },
+      "to_currency": {
+        "type": "string",
+        "description": "Target 3-letter currency code (e.g. EUR, USD, JPY)"
+      }
+    },
+    "required": ["amount", "from_currency", "to_currency"]
+  },
+  "icon": "💱"
+}
