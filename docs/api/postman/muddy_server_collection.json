@@ -2,7 +2,7 @@
 	"info": {
 		"_postman_id": "9b1deb4d-3b7d-4bad-9bdd-2b0d7b3dcb6d",
 		"name": "Muddy Server API",
-		"description": "Comprehensive Postman collection for Muddy Server: Computation-as-a-Service (CaaS), OpenRouter Multi-Model Gateway, LangGraph State Graphs, Transactional Pipelines, and Real-Time Telemetry.",
+		"description": "Comprehensive Postman collection for Muddy Server: Computation-as-a-Service (CaaS), OpenRouter Multi-Model Gateway, LangGraph State Graphs, Tool Marketplace & Plugin Engine, Transactional Pipelines, and Real-Time Telemetry.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
@@ -11,6 +11,19 @@
 			"item": [
 				{
 					"name": "Root Information",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -25,6 +38,23 @@
 				},
 				{
 					"name": "Health Check",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"pm.test(\"Server status is healthy\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.expect(jsonData.status).to.eql(\"healthy\");",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -63,6 +93,9 @@
 							"listen": "test",
 							"script": {
 								"exec": [
+									"pm.test(\"Status code is 202 Accepted\", function () {",
+									"    pm.response.to.have.status(202);",
+									"});",
 									"if (pm.response.code === 202) {",
 									"    var jsonData = pm.response.json();",
 									"    if (jsonData.job_id) {",
@@ -84,7 +117,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"job_type\": \"article_generation\",\n  \"payload\": {\n    \"topic\": \"Event-Driven Microservices with LangGraph and FastAPI\",\n    \"target_audience\": \"Senior Backend Architects\",\n    \"model\": \"gemini-3.7-flash\"\n  },\n  \"run_async\": true\n}"
+							"raw": "{\n  \"job_type\": \"article_generation\",\n  \"payload\": {\n    \"topic\": \"Event-Driven Microservices with LangGraph and FastAPI\",\n    \"target_audience\": \"Senior Backend Architects\",\n    \"model\": \"{{model}}\"\n  },\n  \"run_async\": true\n}"
 						},
 						"url": {
 							"raw": "{{base_url}}/api/v1/compute/jobs",
@@ -97,6 +130,19 @@
 				},
 				{
 					"name": "Get Compute Job Status",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -181,7 +227,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"prompt\": \"Summarize the benefits of event-driven microservices in 3 concise bullet points.\",\n  \"provider\": \"openrouter\",\n  \"model\": \"claude-3.7-sonnet\",\n  \"temperature\": 0.7\n}"
+							"raw": "{\n  \"prompt\": \"Summarize the benefits of event-driven microservices in 3 concise bullet points.\",\n  \"provider\": \"{{provider}}\",\n  \"model\": \"{{model}}\",\n  \"temperature\": 0.7\n}"
 						},
 						"url": {
 							"raw": "{{base_url}}/api/v1/compute/llm/generate",
@@ -208,7 +254,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"prompt\": \"Write a short Python async function using asyncio.gather\",\n  \"provider\": \"openrouter\",\n  \"model\": \"gemini-3.7-flash\",\n  \"temperature\": 0.5\n}"
+							"raw": "{\n  \"prompt\": \"Write a short Python async function using asyncio.gather\",\n  \"provider\": \"{{provider}}\",\n  \"model\": \"{{model}}\",\n  \"temperature\": 0.5\n}"
 						},
 						"url": {
 							"raw": "{{base_url}}/api/v1/compute/llm/stream",
@@ -236,7 +282,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"message\": \"Calculate (128 * 45) + 32 and check server system health status\",\n  \"provider\": \"openrouter\",\n  \"model\": \"gemini-3.7-flash\",\n  \"session_id\": \"{{session_id}}\",\n  \"tools\": [\"calculator\", \"get_system_status\", \"web_search\"],\n  \"temperature\": 0.7\n}"
+							"raw": "{\n  \"message\": \"Calculate (128 * 45) + 32, convert 150 USD to EUR using currency converter, and check server system health status\",\n  \"provider\": \"{{provider}}\",\n  \"model\": \"{{model}}\",\n  \"session_id\": \"{{session_id}}\",\n  \"tools\": [\"calculator\", \"currency_converter\", \"get_system_status\", \"web_search\"],\n  \"temperature\": 0.7\n}"
 						},
 						"url": {
 							"raw": "{{base_url}}/api/v1/agents/chat",
@@ -263,7 +309,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"message\": \"Explain how transaction rollbacks work in Muddy Server\",\n  \"provider\": \"openrouter\",\n  \"model\": \"gemini-3.7-flash\",\n  \"session_id\": \"{{session_id}}\"\n}"
+							"raw": "{\n  \"message\": \"Explain how transaction rollbacks work in Muddy Server\",\n  \"provider\": \"{{provider}}\",\n  \"model\": \"{{model}}\",\n  \"session_id\": \"{{session_id}}\"\n}"
 						},
 						"url": {
 							"raw": "{{base_url}}/api/v1/agents/chat/stream",
@@ -327,6 +373,19 @@
 			"item": [
 				{
 					"name": "List All Registered Tools",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -361,6 +420,20 @@
 						"description": "Directly executes a tool with parameters and records execution audit log in SQL."
 					},
 					"response": []
+				},
+				{
+					"name": "List Connected MCP Servers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/tools/mcp/servers",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "tools", "mcp", "servers"]
+						},
+						"description": "Returns connected Model Context Protocol (MCP) tool servers."
+					},
+					"response": []
 				}
 			]
 		},
@@ -369,15 +442,48 @@
 			"item": [
 				{
 					"name": "Browse Marketplace Catalog",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/api/v1/tools/marketplace",
+							"raw": "{{base_url}}/api/v1/tools/marketplace?category=finance&search=currency",
 							"host": ["{{base_url}}"],
-							"path": ["api", "v1", "tools", "marketplace"]
+							"path": ["api", "v1", "tools", "marketplace"],
+							"query": [
+								{
+									"key": "category",
+									"value": "finance",
+									"description": "Filter by category (finance, developer, nlp, utilities)",
+									"disabled": true
+								},
+								{
+									"key": "tag",
+									"value": "currency",
+									"description": "Filter by tag",
+									"disabled": true
+								},
+								{
+									"key": "search",
+									"value": "currency",
+									"description": "Free text search",
+									"disabled": true
+								}
+							]
 						},
-						"description": "Browse catalog of all discovered marketplace tools."
+						"description": "Browse catalog of all discovered marketplace tools with filtering and search."
 					},
 					"response": []
 				},
@@ -387,9 +493,9 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/api/v1/tools/marketplace/currency_converter",
+							"raw": "{{base_url}}/api/v1/tools/marketplace/{{tool_id}}",
 							"host": ["{{base_url}}"],
-							"path": ["api", "v1", "tools", "marketplace", "currency_converter"]
+							"path": ["api", "v1", "tools", "marketplace", "{{tool_id}}"]
 						},
 						"description": "Retrieves manifest, parameter JSON Schema, and README for a specific tool."
 					},
@@ -397,6 +503,25 @@
 				},
 				{
 					"name": "Scaffold Tool Boilerplate",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201 Created\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"if (pm.response.code === 201) {",
+									"    var jsonData = pm.response.json();",
+									"    if (jsonData.tool_id) {",
+									"        pm.environment.set(\"tool_id\", jsonData.tool_id);",
+									"    }",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [
@@ -420,6 +545,25 @@
 				},
 				{
 					"name": "Upload Custom Tool",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 201 Created\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});",
+									"if (pm.response.code === 201) {",
+									"    var jsonData = pm.response.json();",
+									"    if (jsonData.tool_id) {",
+									"        pm.environment.set(\"tool_id\", jsonData.tool_id);",
+									"    }",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [
@@ -447,9 +591,9 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/api/v1/tools/marketplace/currency_converter/install",
+							"raw": "{{base_url}}/api/v1/tools/marketplace/{{tool_id}}/install",
 							"host": ["{{base_url}}"],
-							"path": ["api", "v1", "tools", "marketplace", "currency_converter", "install"]
+							"path": ["api", "v1", "tools", "marketplace", "{{tool_id}}", "install"]
 						},
 						"description": "Enables a marketplace tool for live agents."
 					},
@@ -461,11 +605,25 @@
 						"method": "POST",
 						"header": [],
 						"url": {
-							"raw": "{{base_url}}/api/v1/tools/marketplace/currency_converter/uninstall",
+							"raw": "{{base_url}}/api/v1/tools/marketplace/{{tool_id}}/uninstall",
 							"host": ["{{base_url}}"],
-							"path": ["api", "v1", "tools", "marketplace", "currency_converter", "uninstall"]
+							"path": ["api", "v1", "tools", "marketplace", "{{tool_id}}", "uninstall"]
 						},
 						"description": "Disables a marketplace tool."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Custom Tool",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/v1/tools/marketplace/{{tool_id}}",
+							"host": ["{{base_url}}"],
+							"path": ["api", "v1", "tools", "marketplace", "{{tool_id}}"]
+						},
+						"description": "Permanently deletes custom tool files from server."
 					},
 					"response": []
 				}
