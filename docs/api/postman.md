@@ -1,6 +1,6 @@
 # Postman Collection & Environment Guide 📮
 
-Muddy Server includes a ready-to-import **Postman Collection (v2.1)** and **Environment JSON** covering all REST endpoints, streaming APIs, and agent execution workflows.
+Muddy Server includes a ready-to-import **Postman Collection (v2.1)** and **Environment JSON** covering all REST endpoints, streaming APIs, agent execution workflows, and the **Tool Marketplace**.
 
 ---
 
@@ -40,8 +40,16 @@ Muddy Server includes a ready-to-import **Postman Collection (v2.1)** and **Envi
 | | Conversational Stream | `POST` | `/api/v1/agents/chat/stream` | Real-time agent thought streaming |
 | | LangGraph State Graph | `POST` | `/api/v1/agents/workflow/run` | Cyclic DAG (Planner ➔ Executor ➔ Reflector) |
 | | Multi-Agent Supervisor | `POST` | `/api/v1/agents/supervisor/run` | Supervisor delegating across subagents |
-| **Tools & MCP** | List All Tools | `GET` | `/api/v1/tools` | Discovers internal tools & MCP servers |
+| **Tools & MCP** | List All Tools | `GET` | `/api/v1/tools` | Discovers internal tools & MCP tools |
 | | Execute Tool | `POST` | `/api/v1/tools/calculator/execute` | Executes tool directly & logs to SQL |
+| | List MCP Servers | `GET` | `/api/v1/tools/mcp/servers` | Discovers connected MCP tool servers |
+| **Tool Marketplace** | Browse Catalog | `GET` | `/api/v1/tools/marketplace` | Lists discovered tools with category & search filters |
+| | Get Tool Detail | `GET` | `/api/v1/tools/marketplace/{{tool_id}}` | Views schema, README & code preview |
+| | Scaffold Tool | `POST` | `/api/v1/tools/marketplace/scaffold` | Creates starter boilerplate files on disk |
+| | Upload Custom Tool | `POST` | `/api/v1/tools/marketplace/upload` | Uploads and registers new tool bundle |
+| | Install / Enable Tool | `POST` | `/api/v1/tools/marketplace/{{tool_id}}/install` | Enables tool for live agents |
+| | Uninstall / Disable Tool | `POST` | `/api/v1/tools/marketplace/{{tool_id}}/uninstall` | Disables tool dynamically |
+| | Delete Custom Tool | `DELETE` | `/api/v1/tools/marketplace/{{tool_id}}` | Permanently deletes custom tool folder |
 | **Docs Engine** | Get Docs Tree | `GET` | `/api/v1/docs/tree` | Hierarchical documentation tree |
 | | Get Doc Page | `GET` | `/api/v1/docs/{section}/{name}` | Structured markdown and metadata |
 | | Get Raw Markdown | `GET` | `/api/v1/docs/{section}/{name}/raw` | Plain text markdown |
@@ -54,5 +62,8 @@ Muddy Server includes a ready-to-import **Postman Collection (v2.1)** and **Envi
 | :--- | :--- | :--- |
 | `{{base_url}}` | `http://localhost:8000` | HTTP root endpoint of Muddy Server |
 | `{{ws_base_url}}` | `ws://localhost:8000` | WebSocket root endpoint |
+| `{{provider}}` | `openrouter` | Default LLM provider |
+| `{{model}}` | `gemini-3.7-flash` | Active frontier model |
 | `{{job_id}}` | *(Auto-set)* | Automatically populated upon calling *Submit Compute Job* |
 | `{{session_id}}` | `session-test-001` | Active conversation session identifier |
+| `{{tool_id}}` | `currency_converter` | Active marketplace tool identifier |
